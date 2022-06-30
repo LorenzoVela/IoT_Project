@@ -8,25 +8,15 @@ generic module FakeSensorP()
 implementation 
 {
 
-	task void readDone();
-
-	//***************** Read interface ********************//
-	command error_t Read.read()
-	{
-		post readDone();
-		return SUCCESS;
-	}
-
 	//******************** Read Done **********************//
 	task void readDone() {
 	  
 		sensorState state;
 
-	  	int num = (call Random.rand16() %10);
+	  	int num = (call Random.rand16() %10);  //generates a random number between 0 and 9
 	  	int x;
 	  	int y;
-	  	printf("\n%d\n", num); //to delete
-	  	switch (num)
+	  	switch (num) //select the state
 	  	{
 	  		case 0 ... 2:
 	  			strcpy(state.stateName, "RUNNING");
@@ -61,5 +51,12 @@ implementation
 	  	state.coord[0] = state.X;
 	  	state.coord[1] = state.Y;
 	  	*/
+	}
+	
+	//***************** Read interface ********************//
+	command error_t Read.read()
+	{
+		post readDone();
+		return SUCCESS;
 	}
 }  

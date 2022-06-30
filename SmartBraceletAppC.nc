@@ -1,46 +1,42 @@
 #include "SmartBracelet.h"
-//#include "SmartBracelet_Serial.h"
 
 configuration SmartBraceletAppC {}
 
 implementation {
 
-/****** COMPONENTS *****/
-  components MainC, SmartBraceletC as App;
+	/****** COMPONENTS *****/
+	components MainC, SmartBraceletC as App;
   
-  components new AMSenderC(AM_RADIO_TYPE);
-  components new AMReceiverC(AM_RADIO_TYPE);
-  components ActiveMessageC as TEST;
+  	components new AMSenderC(AM_RADIO_TYPE);
+  	components new AMReceiverC(AM_RADIO_TYPE);
+  	components ActiveMessageC;
   
-  components new TimerMilliC() as Timer10;
-  components new TimerMilliC() as Timer60;
-  components new TimerMilliC() as PairingTimer;
+  	components new TimerMilliC() as Timer10;
+  	components new TimerMilliC() as Timer60;
+  	components new TimerMilliC() as PairingTimer;
   
-  components new FakeSensorC();
-  
+  	components new FakeSensorC();
 
-/****** INTERFACES *****/
-  // Boot
-  App.Boot -> MainC.Boot;
+	/****** INTERFACES *****/
+  	// Boot interface
+  	App.Boot -> MainC.Boot;
   
-  // Radio
-  App.AMSend -> AMSenderC;
-  App.Receive -> AMReceiverC;
-  App.AMControl -> TEST;
+  	// Radio interafaces
+  	App.AMSend -> AMSenderC;
+  	App.Receive -> AMReceiverC;
+  	App.AMControl -> ActiveMessageC;
   
-  App.Packet -> AMSenderC;
-  App.AMPacket -> AMSenderC;
-  App.PacketAcknowledgements -> TEST;
+  	App.Packet -> AMSenderC;
+  	App.AMPacket -> AMSenderC;
+  	App.PacketAcknowledgements -> AMSenderC.Acks;//ActiveMessageC;
 
-  // Timer
-  App.PairingTimer -> PairingTimer;
-  App.Timer10 -> Timer10;
-  App.Timer60 -> Timer60;
+  	// Timer interfaces
+  	App.Timer10 -> Timer10;
+  	App.Timer60 -> Timer60;
+  	App.PairingTimer -> PairingTimer;
   
-
-  App.FakeSensor -> FakeSensorC;
-  
-
+  	//Fake Sensor read
+  	App.FakeSensor -> FakeSensorC;
 }
 
 
