@@ -1,0 +1,273 @@
+********************************************
+*                                          *
+*             TOSSIM Script                *
+*                                          *
+********************************************
+Initializing mac...
+Initializing radio channels....
+    using topology file: topology.txt
+    using noise file: meyer-heavy.txt
+Initializing simulator....
+Activate debug message on channel Radio
+Activate debug message on channel Pairing
+Activate debug message on channel TimerPairing
+Activate debug message on channel Radio_ack
+Activate debug message on channel Radio_sent
+Activate debug message on channel Radio_rec
+Activate debug message on channel Radio_pack
+Activate debug message on channel OperationalMode
+Activate debug message on channel Timer10s
+Activate debug message on channel Timer60s
+Activate debug message on channel Sensors
+Activate debug message on channel Info
+Creating node 0...
+>>>Will boot at time 0 [sec]
+Creating node 1...
+>>>Will boot at time 0 [sec]
+Creating radio channels...
+>>>Setting radio channel from node  0  to node  1  with gain  -60.0  dBm
+>>>Setting radio channel from node  0  to node  2  with gain  -60.0  dBm
+>>>Setting radio channel from node  0  to node  3  with gain  -60.0  dBm
+>>>Setting radio channel from node  1  to node  0  with gain  -60.0  dBm
+>>>Setting radio channel from node  1  to node  2  with gain  -60.0  dBm
+>>>Setting radio channel from node  1  to node  3  with gain  -60.0  dBm
+>>>Setting radio channel from node  2  to node  0  with gain  -60.0  dBm
+>>>Setting radio channel from node  2  to node  1  with gain  -60.0  dBm
+>>>Setting radio channel from node  2  to node  3  with gain  -60.0  dBm
+>>>Setting radio channel from node  3  to node  0  with gain  -60.0  dBm
+>>>Setting radio channel from node  3  to node  1  with gain  -60.0  dBm
+>>>Setting radio channel from node  3  to node  2  with gain  -60.0  dBm
+Initializing Closest Pattern Matching (CPM)...
+Reading noise model data file: meyer-heavy.txt
+Loading:##Done!
+>>>Creating noise model for node: 0
+>>>Creating noise model for node: 1
+>>>Creating noise model for node: 2
+>>>Creating noise model for node: 3
+Start simulation with TOSSIM! 
+
+
+
+DEBUG (0): Radio device ready
+DEBUG (0): Pairing phase started
+DEBUG (1): Radio device ready
+DEBUG (1): Pairing phase started
+DEBUG (0): TimerPairing: timer fired at time 0:0:0.244140635
+DEBUG (0): Radio: sending broadcast pairing packet with key=wcru2p8ylwr6nbv584re
+DEBUG (0): Value of coupled:(null)DEBUG (1): TimerPairing: timer fired at time 0:0:0.244140635
+DEBUG (1): Radio: sending broadcast pairing packet with key=wcru2p8ylwr6nbv584re
+DEBUG (1): Value of coupled:(null)DEBUG (0): PayloadXXXX: type: 1, id: 1, content: wcru2p8ylwr6nbv584re
+DEBUG (0): Received a message from mote: 1
+DEBUG (0): Message for pairing phase 0 received. Address: 1
+DEBUG (0): Sono mote: 0 e sto mandando conferma al mote: 1
+DEBUG (1): PayloadXXXX: type: 2, id: 3, content: wcru2p8ylwr6nbv584re
+DEBUG (1): Received a message from mote: 0
+DEBUG (1): Message for pairing phase 1 received
+DEBUG (0): Packet sent
+DEBUG (1): TimerPairing: timer fired at time 0:0:0.488281260
+DEBUG (1): TimerPairing: timer fired at time 0:0:0.732421885
+DEBUG (1): TimerPairing: timer fired at time 0:0:0.976562510
+DEBUG (1): TimerPairing: timer fired at time 0:0:1.220703135
+DEBUG (1): TimerPairing: timer fired at time 0:0:1.464843760
+DEBUG (1): TimerPairing: timer fired at time 0:0:1.708984385
+DEBUG (1): TimerPairing: timer fired at time 0:0:1.953125010
+DEBUG (1): TimerPairing: timer fired at time 0:0:2.197265635
+DEBUG (1): TimerPairing: timer fired at time 0:0:2.441406260
+DEBUG (1): TimerPairing: timer fired at time 0:0:2.685546885
+DEBUG (1): TimerPairing: timer fired at time 0:0:2.929687510
+DEBUG (1): TimerPairing: timer fired at time 0:0:3.173828135
+DEBUG (1): TimerPairing: timer fired at time 0:0:3.417968760
+DEBUG (1): TimerPairing: timer fired at time 0:0:3.662109385
+DEBUG (1): TimerPairing: timer fired at time 0:0:3.906250010
+DEBUG (1): TimerPairing: timer fired at time 0:0:4.150390635
+DEBUG (1): TimerPairing: timer fired at time 0:0:4.394531260
+DEBUG (1): TimerPairing: timer fired at time 0:0:4.638671885
+DEBUG (1): TimerPairing: timer fired at time 0:0:4.882812510
+DEBUG (1): TimerPairing: timer fired at time 0:0:5.126953135
+DEBUG (1): TimerPairing: timer fired at time 0:0:5.371093760
+DEBUG (1): TimerPairing: timer fired at time 0:0:5.615234385
+DEBUG (1): TimerPairing: timer fired at time 0:0:5.859375010
+DEBUG (1): TimerPairing: timer fired at time 0:0:6.103515635
+DEBUG (1): TimerPairing: timer fired at time 0:0:6.347656260
+DEBUG (1): TimerPairing: timer fired at time 0:0:6.591796885
+DEBUG (1): TimerPairing: timer fired at time 0:0:6.835937510
+DEBUG (1): TimerPairing: timer fired at time 0:0:7.080078135
+DEBUG (1): TimerPairing: timer fired at time 0:0:7.324218760
+DEBUG (1): TimerPairing: timer fired at time 0:0:7.568359385
+DEBUG (1): TimerPairing: timer fired at time 0:0:7.812500010
+DEBUG (1): TimerPairing: timer fired at time 0:0:8.056640635
+DEBUG (1): TimerPairing: timer fired at time 0:0:8.300781260
+DEBUG (1): TimerPairing: timer fired at time 0:0:8.544921885
+DEBUG (1): TimerPairing: timer fired at time 0:0:8.789062510
+DEBUG (1): TimerPairing: timer fired at time 0:0:9.033203135
+DEBUG (1): TimerPairing: timer fired at time 0:0:9.277343760
+DEBUG (1): TimerPairing: timer fired at time 0:0:9.521484385
+DEBUG (1): TimerPairing: timer fired at time 0:0:9.765625010
+DEBUG (1): TimerPairing: timer fired at time 0:0:10.009765635
+DEBUG (1): TimerPairing: timer fired at time 0:0:10.253906260
+DEBUG (1): TimerPairing: timer fired at time 0:0:10.498046885
+DEBUG (1): TimerPairing: timer fired at time 0:0:10.742187510
+DEBUG (1): TimerPairing: timer fired at time 0:0:10.986328135
+DEBUG (1): TimerPairing: timer fired at time 0:0:11.230468760
+DEBUG (1): TimerPairing: timer fired at time 0:0:11.474609385
+DEBUG (1): TimerPairing: timer fired at time 0:0:11.718750010
+DEBUG (1): TimerPairing: timer fired at time 0:0:11.962890635
+DEBUG (1): TimerPairing: timer fired at time 0:0:12.207031260
+DEBUG (1): TimerPairing: timer fired at time 0:0:12.451171885
+DEBUG (1): TimerPairing: timer fired at time 0:0:12.695312510
+DEBUG (1): TimerPairing: timer fired at time 0:0:12.939453135
+DEBUG (1): TimerPairing: timer fired at time 0:0:13.183593760
+DEBUG (1): TimerPairing: timer fired at time 0:0:13.427734385
+DEBUG (1): TimerPairing: timer fired at time 0:0:13.671875010
+DEBUG (1): TimerPairing: timer fired at time 0:0:13.916015635
+DEBUG (1): TimerPairing: timer fired at time 0:0:14.160156260
+DEBUG (1): TimerPairing: timer fired at time 0:0:14.404296885
+DEBUG (1): TimerPairing: timer fired at time 0:0:14.648437510
+DEBUG (1): TimerPairing: timer fired at time 0:0:14.892578135
+DEBUG (1): TimerPairing: timer fired at time 0:0:15.136718760
+DEBUG (1): TimerPairing: timer fired at time 0:0:15.380859385
+DEBUG (1): TimerPairing: timer fired at time 0:0:15.625000010
+DEBUG (1): TimerPairing: timer fired at time 0:0:15.869140635
+DEBUG (1): TimerPairing: timer fired at time 0:0:16.113281260
+DEBUG (1): TimerPairing: timer fired at time 0:0:16.357421885
+DEBUG (1): TimerPairing: timer fired at time 0:0:16.601562510
+DEBUG (1): TimerPairing: timer fired at time 0:0:16.845703135
+DEBUG (1): TimerPairing: timer fired at time 0:0:17.089843760
+DEBUG (1): TimerPairing: timer fired at time 0:0:17.333984385
+DEBUG (1): TimerPairing: timer fired at time 0:0:17.578125010
+DEBUG (1): TimerPairing: timer fired at time 0:0:17.822265635
+DEBUG (1): TimerPairing: timer fired at time 0:0:18.066406260
+DEBUG (1): TimerPairing: timer fired at time 0:0:18.310546885
+DEBUG (1): TimerPairing: timer fired at time 0:0:18.554687510
+DEBUG (1): TimerPairing: timer fired at time 0:0:18.798828135
+DEBUG (1): TimerPairing: timer fired at time 0:0:19.042968760
+DEBUG (1): TimerPairing: timer fired at time 0:0:19.287109385
+DEBUG (1): TimerPairing: timer fired at time 0:0:19.531250010
+DEBUG (1): TimerPairing: timer fired at time 0:0:19.775390635
+DEBUG (1): TimerPairing: timer fired at time 0:0:20.019531260
+DEBUG (1): TimerPairing: timer fired at time 0:0:20.263671885
+DEBUG (1): TimerPairing: timer fired at time 0:0:20.507812510
+DEBUG (1): TimerPairing: timer fired at time 0:0:20.751953135
+DEBUG (1): TimerPairing: timer fired at time 0:0:20.996093760
+DEBUG (1): TimerPairing: timer fired at time 0:0:21.240234385
+DEBUG (1): TimerPairing: timer fired at time 0:0:21.484375010
+DEBUG (1): TimerPairing: timer fired at time 0:0:21.728515635
+DEBUG (1): TimerPairing: timer fired at time 0:0:21.972656260
+DEBUG (1): TimerPairing: timer fired at time 0:0:22.216796885
+DEBUG (1): TimerPairing: timer fired at time 0:0:22.460937510
+DEBUG (1): TimerPairing: timer fired at time 0:0:22.705078135
+DEBUG (1): TimerPairing: timer fired at time 0:0:22.949218760
+DEBUG (1): TimerPairing: timer fired at time 0:0:23.193359385
+DEBUG (1): TimerPairing: timer fired at time 0:0:23.437500010
+DEBUG (1): TimerPairing: timer fired at time 0:0:23.681640635
+DEBUG (1): TimerPairing: timer fired at time 0:0:23.925781260
+DEBUG (1): TimerPairing: timer fired at time 0:0:24.169921885
+DEBUG (1): TimerPairing: timer fired at time 0:0:24.414062510
+DEBUG (1): TimerPairing: timer fired at time 0:0:24.658203135
+DEBUG (1): TimerPairing: timer fired at time 0:0:24.902343760
+DEBUG (1): TimerPairing: timer fired at time 0:0:25.146484385
+DEBUG (1): TimerPairing: timer fired at time 0:0:25.390625010
+DEBUG (1): TimerPairing: timer fired at time 0:0:25.634765635
+DEBUG (1): TimerPairing: timer fired at time 0:0:25.878906260
+DEBUG (1): TimerPairing: timer fired at time 0:0:26.123046885
+DEBUG (1): TimerPairing: timer fired at time 0:0:26.367187510
+DEBUG (1): TimerPairing: timer fired at time 0:0:26.611328135
+DEBUG (1): TimerPairing: timer fired at time 0:0:26.855468760
+DEBUG (1): TimerPairing: timer fired at time 0:0:27.099609385
+DEBUG (1): TimerPairing: timer fired at time 0:0:27.343750010
+DEBUG (1): TimerPairing: timer fired at time 0:0:27.587890635
+DEBUG (1): TimerPairing: timer fired at time 0:0:27.832031260
+DEBUG (1): TimerPairing: timer fired at time 0:0:28.076171885
+DEBUG (1): TimerPairing: timer fired at time 0:0:28.320312510
+DEBUG (1): TimerPairing: timer fired at time 0:0:28.564453135
+DEBUG (1): TimerPairing: timer fired at time 0:0:28.808593760
+DEBUG (1): TimerPairing: timer fired at time 0:0:29.052734385
+DEBUG (1): TimerPairing: timer fired at time 0:0:29.296875010
+DEBUG (1): TimerPairing: timer fired at time 0:0:29.541015635
+DEBUG (1): TimerPairing: timer fired at time 0:0:29.785156260
+DEBUG (1): TimerPairing: timer fired at time 0:0:30.029296885
+DEBUG (1): TimerPairing: timer fired at time 0:0:30.273437510
+DEBUG (1): TimerPairing: timer fired at time 0:0:30.517578135
+DEBUG (1): TimerPairing: timer fired at time 0:0:30.761718760
+DEBUG (1): TimerPairing: timer fired at time 0:0:31.005859385
+DEBUG (1): TimerPairing: timer fired at time 0:0:31.250000010
+DEBUG (1): TimerPairing: timer fired at time 0:0:31.494140635
+DEBUG (1): TimerPairing: timer fired at time 0:0:31.738281260
+DEBUG (1): TimerPairing: timer fired at time 0:0:31.982421885
+DEBUG (1): TimerPairing: timer fired at time 0:0:32.226562510
+DEBUG (1): TimerPairing: timer fired at time 0:0:32.470703135
+DEBUG (1): TimerPairing: timer fired at time 0:0:32.714843760
+DEBUG (1): TimerPairing: timer fired at time 0:0:32.958984385
+DEBUG (1): TimerPairing: timer fired at time 0:0:33.203125010
+DEBUG (1): TimerPairing: timer fired at time 0:0:33.447265635
+DEBUG (1): TimerPairing: timer fired at time 0:0:33.691406260
+DEBUG (1): TimerPairing: timer fired at time 0:0:33.935546885
+DEBUG (1): TimerPairing: timer fired at time 0:0:34.179687510
+DEBUG (1): TimerPairing: timer fired at time 0:0:34.423828135
+DEBUG (1): TimerPairing: timer fired at time 0:0:34.667968760
+DEBUG (1): TimerPairing: timer fired at time 0:0:34.912109385
+DEBUG (1): TimerPairing: timer fired at time 0:0:35.156250010
+DEBUG (1): TimerPairing: timer fired at time 0:0:35.400390635
+DEBUG (1): TimerPairing: timer fired at time 0:0:35.644531260
+DEBUG (1): TimerPairing: timer fired at time 0:0:35.888671885
+DEBUG (1): TimerPairing: timer fired at time 0:0:36.132812510
+DEBUG (1): TimerPairing: timer fired at time 0:0:36.376953135
+DEBUG (1): TimerPairing: timer fired at time 0:0:36.621093760
+DEBUG (1): TimerPairing: timer fired at time 0:0:36.865234385
+DEBUG (1): TimerPairing: timer fired at time 0:0:37.109375010
+DEBUG (1): TimerPairing: timer fired at time 0:0:37.353515635
+DEBUG (1): TimerPairing: timer fired at time 0:0:37.597656260
+DEBUG (1): TimerPairing: timer fired at time 0:0:37.841796885
+DEBUG (1): TimerPairing: timer fired at time 0:0:38.085937510
+DEBUG (1): TimerPairing: timer fired at time 0:0:38.330078135
+DEBUG (1): TimerPairing: timer fired at time 0:0:38.574218760
+DEBUG (1): TimerPairing: timer fired at time 0:0:38.818359385
+DEBUG (1): TimerPairing: timer fired at time 0:0:39.062500010
+DEBUG (1): TimerPairing: timer fired at time 0:0:39.306640635
+DEBUG (1): TimerPairing: timer fired at time 0:0:39.550781260
+DEBUG (1): TimerPairing: timer fired at time 0:0:39.794921885
+DEBUG (1): TimerPairing: timer fired at time 0:0:40.039062510
+DEBUG (1): TimerPairing: timer fired at time 0:0:40.283203135
+DEBUG (1): TimerPairing: timer fired at time 0:0:40.527343760
+DEBUG (1): TimerPairing: timer fired at time 0:0:40.771484385
+DEBUG (1): TimerPairing: timer fired at time 0:0:41.015625010
+DEBUG (1): TimerPairing: timer fired at time 0:0:41.259765635
+DEBUG (1): TimerPairing: timer fired at time 0:0:41.503906260
+DEBUG (1): TimerPairing: timer fired at time 0:0:41.748046885
+DEBUG (1): TimerPairing: timer fired at time 0:0:41.992187510
+DEBUG (1): TimerPairing: timer fired at time 0:0:42.236328135
+DEBUG (1): TimerPairing: timer fired at time 0:0:42.480468760
+DEBUG (1): TimerPairing: timer fired at time 0:0:42.724609385
+DEBUG (1): TimerPairing: timer fired at time 0:0:42.968750010
+DEBUG (1): TimerPairing: timer fired at time 0:0:43.212890635
+DEBUG (1): TimerPairing: timer fired at time 0:0:43.457031260
+DEBUG (1): TimerPairing: timer fired at time 0:0:43.701171885
+DEBUG (1): TimerPairing: timer fired at time 0:0:43.945312510
+DEBUG (1): TimerPairing: timer fired at time 0:0:44.189453135
+DEBUG (1): TimerPairing: timer fired at time 0:0:44.433593760
+DEBUG (1): TimerPairing: timer fired at time 0:0:44.677734385
+DEBUG (1): TimerPairing: timer fired at time 0:0:44.921875010
+DEBUG (1): TimerPairing: timer fired at time 0:0:45.166015635
+DEBUG (1): TimerPairing: timer fired at time 0:0:45.410156260
+DEBUG (1): TimerPairing: timer fired at time 0:0:45.654296885
+DEBUG (1): TimerPairing: timer fired at time 0:0:45.898437510
+DEBUG (1): TimerPairing: timer fired at time 0:0:46.142578135
+DEBUG (1): TimerPairing: timer fired at time 0:0:46.386718760
+DEBUG (1): TimerPairing: timer fired at time 0:0:46.630859385
+DEBUG (1): TimerPairing: timer fired at time 0:0:46.875000010
+DEBUG (1): TimerPairing: timer fired at time 0:0:47.119140635
+DEBUG (1): TimerPairing: timer fired at time 0:0:47.363281260
+DEBUG (1): TimerPairing: timer fired at time 0:0:47.607421885
+DEBUG (1): TimerPairing: timer fired at time 0:0:47.851562510
+DEBUG (1): TimerPairing: timer fired at time 0:0:48.095703135
+DEBUG (1): TimerPairing: timer fired at time 0:0:48.339843760
+DEBUG (1): TimerPairing: timer fired at time 0:0:48.583984385
+DEBUG (1): TimerPairing: timer fired at time 0:0:48.828125010
+DEBUG (1): TimerPairing: timer fired at time 0:0:49.072265635
+DEBUG (1): TimerPairing: timer fired at time 0:0:49.316406260
+DEBUG (1): TimerPairing: timer fired at time 0:0:49.560546885
+DEBUG (1): TimerPairing: timer fired at time 0:0:49.804687510
+
+
+
+Simulation finished!
