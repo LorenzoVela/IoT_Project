@@ -1,6 +1,6 @@
 #include "Timer.h"
 #include "SmartBracelet.h"
-#include <stdio.h>
+//#include <stdio.h>
 
 module SmartBraceletC @safe() {
 	uses {
@@ -11,11 +11,11 @@ module SmartBraceletC @safe() {
     	interface PacketAcknowledgements;
     
     	//interfaces for communication
-    	interface SplitControl as AMControl;
-    	interface Packet;
-    	interface AMPacket;
+    	interface SplitControl;
     	interface AMSend;
     	interface Receive;
+    	interface Packet;
+    	interface AMPacket;
     	
     	//interfaces for timer
     	interface Timer<TMilli> as PairingTimer;
@@ -23,7 +23,7 @@ module SmartBraceletC @safe() {
     	interface Timer<TMilli> as Timer60;
     
     	//interface used to perform sensor reading, to get the value from a sensor
-    	interface Read<sensorState> as FakeSensor;
+    	interface Read<sensorState>;
   
   	}
 }
@@ -59,24 +59,24 @@ implementation {
   
   	//***************** Boot interface ********************//
   	event void Boot.booted() {
-    	call AMControl.start();
+    	call SplitControl.start();
   	}
 
   // called when radio is ready
   
   //NIENTE DA FARE
-  	event void AMControl.startDone(error_t err) {
+  	event void SplitControl.startDone(error_t err) {
     	if (err == SUCCESS) {
      		dbg("Radio", "Radio device ready\n");
       		dbg("Pairing", "Pairing phase started\n");
       		// Start pairing phase
       		call PairingTimer.startPeriodic(250);
     	} else {
-      		call AMControl.start();
+      		call SplitControl.start();
     	  }
   	}
   //NIENTE DA FARE
-  	event void AMControl.stopDone(error_t err) {}
+  	event void SplitControl.stopDone(error_t err) {}
   
 //NIENTE DA FARE
   	event void PairingTimer.fired() {
@@ -104,7 +104,7 @@ implementation {
   	event void Timer10.fired() {
     	dbg("Timer10s", "Timer10s: timer fired at time %s\n", sim_time_string());
     	//call PositionSensor.read();
-    	call FakeSensor.read();
+    	call Read.read();
   	}
 
   	// Timer60s fired
@@ -256,7 +256,7 @@ implementation {
 
 
 	//NIENTE DA FARE
-  	event void FakeSensor.readDone(error_t result, sensorState localState) {
+  	event void Read.readDone(error_t result, sensorState localState) {
     	state = localState;
     	dbg("Sensors", "Sensor status: %s\n", state.stateName);
     	dbg("Sensors", "Position X: %hhu, Y: %hhu\n", localState.X, localState.Y);

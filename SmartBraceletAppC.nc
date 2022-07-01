@@ -24,7 +24,7 @@ implementation {
   	// Radio interafaces
   	App.AMSend -> AMSenderC;
   	App.Receive -> AMReceiverC;
-  	App.AMControl -> ActiveMessageC;
+  	App.SplitControl -> ActiveMessageC;
   
   	App.Packet -> AMSenderC;
   	App.AMPacket -> AMSenderC;
@@ -36,7 +36,7 @@ implementation {
   	App.PairingTimer -> PairingTimer;
   
   	//Fake Sensor read
-  	App.FakeSensor -> FakeSensorC;
+  	App.Read -> FakeSensorC;
 }
 
 
