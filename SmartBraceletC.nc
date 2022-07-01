@@ -90,12 +90,12 @@ implementation {
       		//we get the same key for every 2 nodes: parent and child
       		strcpy(message->content, key[TOS_NODE_ID]);
       		if (call AMSend.send(AM_BROADCAST_ADDR, &packet, sizeof(sb_msg_t)) == SUCCESS) {
+      			msgCount++;
 	      		dbg("Radio", "Radio: sending broadcast pairing packet with key=%s\n", key[TOS_NODE_ID]);
 	      		//dbg("Radio", "TEST DEBUGGGZGZGGZ, key=%s\n", message->data);
 	      		busy = TRUE;
       		}
     	}
-    	msgCount++;
   	}
   
   	// Timer10s fired
@@ -170,29 +170,31 @@ implementation {
     			dbg("Radio", "I'm mote %hhu and the key received is %s\n", TOS_NODE_ID, message->content); 
     			dbg("Radio", "Sending confirmation packet to the other mote that is number %hhu\n", pairDevice);
     			//pairDevice = call AMPacket.source( bufPtr );
-    			call PairingTimer.stop();
-    			pairingSucc();
+    			call PairingTimer.stop(); //se va male poi capire che succede
     			phase = 2;
+    			pairingSucc();
     			//dbg("Radio", "178\n");
     		}
     	}
-    	else if(call AMPacket.destination( bufPtr ) == TOS_NODE_ID && strcmp(message->content, key[TOS_NODE_ID]) == 0){ //buddy is sending a message to me and wants to pair
-    		//dbg("Radio","Eureka?\n");
+    	else if(call AMPacket.destination( bufPtr ) == TOS_NODE_ID && strcmp(message->content, key[TOS_NODE_ID]) == 0 && phase == 1){ //buddy is sending a message to me and wants to pair
+    		dbg("Radio","Eureka?\n");
     		sender = call AMPacket.source( bufPtr);
     		phase = 2;
   			call PairingTimer.stop();
   			dbg("Radio", "Content is %s and my key is %s, sender was %hhu\n", message->content, key[TOS_NODE_ID], sender);
-  			dbg("Radio", "Mote %hhu is paired with %hhu\n", TOS_NODE_ID, pairDevice);
+  			dbg("Radio", "Mote %hhu is paired with %hhu\n", TOS_NODE_ID, sender);
   			//call PacketAcknowledgements.requestAck( &packet );
-  			if (call AMSend.send(pairDevice, &packet, sizeof(sb_msg_t)) == SUCCESS) {
-      			dbg("Radio", "Radio: pairing complete, let's start sent to node %hhu\n", pairDevice);	
+  			if (call AMSend.send(sender, &packet, sizeof(sb_msg_t)) == SUCCESS) {
+      			dbg("Radio", "Radio: pairing complete, let's start sent to node %hhu\n", sender);	
       		}
-      		else{
-      			dbg("Radio", "Error 189\n");
-      		}
+      		//else{
+      		//	dbg("Radio", "Error 189\n");
+      		//}
     	}
     	else if (call AMPacket.destination( bufPtr ) == TOS_NODE_ID && message->type == 3) {
 			// Enters if the packet is for this destination and if msg_type == 2
+			sender = call AMPacket.source( bufPtr);
+			pairDevice = call AMPacket.source( bufPtr);
 		  	dbg("Radio_pack","INFO message received\n");
 		  	dbg("Info", "Position X: %hhu, Y: %hhu\n", message->X, message->Y);
 		  	dbg("Info", "Sensor status: %s\n", message->content);
@@ -291,13 +293,13 @@ implementation {
       		while (attempts < 4){
       			//dbg("Radio","305 and value of pairDevice is %hhu\n", pairDevice);
       			if (call AMSend.send(pairDevice, &packet, sizeof(sb_msg_t)) == SUCCESS) {
-        dbg("Radio", "Radio: sanding pairing confirmation to node %hhu\n", pairDevice);	
+        dbg("Radio", "Radio: sending pairing confirmation to node %hhu\n", pairDevice);	
         busy = TRUE;
       				attempts = 5;	
         			busy = TRUE;
       			}
       			else{
-      				dbg("Radio", "Error in sending confirmation packet\n");
+      				dbg("Radio", "Error in sending confirmation packet to mote %hhu\n", pairDevice);
       				//dbg("Radio", "Pair device is: %hu\n", pairDevice);
       				attempts++;
       				//pairingSucc();
@@ -325,8 +327,8 @@ implementation {
         		// Require ack
         		call PacketAcknowledgements.requestAck( &packet );
         		//threshold = threshold + 1;
-        		if (call AMSend.send(pairDevice, &packet, sizeof(sb_msg_t)) == SUCCESS) {
-          			dbg("Radio", "Radio: sending INFO packet to node %hhu\n", pairDevice);	
+        		if (call AMSend.send(sender, &packet, sizeof(sb_msg_t)) == SUCCESS) {
+          			dbg("Radio", "Radio: sending INFO packet to node %hhu\n", sender);	
           			//dbg("Radio", "test key1 %s\n\n", key[1]);
           			busy = TRUE;
         		}
