@@ -32,7 +32,6 @@ implementation {
   
   // Radio control
 	bool busy = FALSE;
-	bool coupled = FALSE;
   	uint16_t msgCount = 1; //changed name
   	uint8_t threshold = 0;
   	uint8_t source;
@@ -81,7 +80,7 @@ implementation {
 //NIENTE DA FARE
   	event void PairingTimer.fired() {
     	dbg("TimerPairing", "TimerPairing: timer fired at time %s\n", sim_time_string());
-    	if (!busy && !coupled) {
+    	if (!busy) {
       		sb_msg_t* message = (sb_msg_t*)call Packet.getPayload(&packet, sizeof(sb_msg_t));
       		// Fill payload
       		message->type = 1; // 0 for pairing phase
@@ -91,7 +90,6 @@ implementation {
       		strcpy(message->content, key[TOS_NODE_ID]);
       		if (call AMSend.send(AM_BROADCAST_ADDR, &packet, sizeof(sb_msg_t)) == SUCCESS) {
 	      		dbg("Radio", "Radio: sending broadcast pairing packet with key=%s\n", key[TOS_NODE_ID]);
-	      		//dbg("Radio", "Value of coupled:%s", coupled);
 	      		//dbg("Radio", "TEST DEBUGGGZGZGGZ, key=%s\n", message->data);
 	      		busy = TRUE;
       		}
@@ -119,7 +117,7 @@ implementation {
   	//NIENTE DA FARE
   	event void AMSend.sendDone(message_t* bufPtr, error_t error) {
     	if (&packet == bufPtr && error == SUCCESS) {
-      		dbg("Radio_sent", "Packet sent, phase= %hu\n",phase);
+      		dbg("Radio_sent", "Packet sent, phase = %hu\n",phase);
       		busy = FALSE;
       		
       		if (phase == 2){
@@ -132,13 +130,10 @@ implementation {
         			if (TOS_NODE_ID % 2 == 0){
           				// Parent bracelet
           				dbg("OperationalMode","------>Parent bracelet<------\n");
-          				coupled = TRUE;
-          				//call SerialControl.start();
           				call Timer60.startOneShot(60000);
         			} else {
           				// Child bracelet
           				dbg("OperationalMode","------>Child bracelet<------\n");
-          				coupled = TRUE;
           				call Timer10.startPeriodic(10000);
         	  		}
       			//}
@@ -170,10 +165,14 @@ implementation {
     	//dbg("Radio", "C'è qualcosa qui?\n");
     	if(call AMPacket.destination( bufPtr ) == AM_BROADCAST_ADDR){ //received a broadcast message for initializing the connection
     		if(strcmp(message->content, key[TOS_NODE_ID]) == 0){ //Oh, it's a message from my buddy
-    			dbg("Radio", "Sending confirmation packet to the other mote\n");
+    			pairDevice = call AMPacket.source( bufPtr );
+    			dbg("Radio", "I'm mote %hhu and the key received is %s", TOS_NODE_ID, message->content); 
+    			dbg("Radio", "Sending confirmation packet to the other mote that is number%hhu\n", pairDevice);
+    			//pairDevice = call AMPacket.source( bufPtr );
     			phase = 2;
     			call PairingTimer.stop();
-    			pairDevice = call AMPacket.source( bufPtr );
+    			//pairDevice = call AMPacket.source( bufPtr );
+    			dbg("Radio", "ENTRA QUIZZ\N");
     			pairingSucc();
     			//dbg("Radio", "178\n");
     		}
@@ -182,6 +181,8 @@ implementation {
     		//dbg("Radio","Eureka?\n");
     		phase = 2;
   			call PairingTimer.stop();
+  			
+  			dbg("Radio", "Mote %hhu is paired with %hhu\n", TOS_NODE_ID, pairDevice);
   			//call PacketAcknowledgements.requestAck( &packet );
   			if (call AMSend.send(pairDevice, &packet, sizeof(sb_msg_t)) == SUCCESS) {
       			dbg("Radio", "Radio: pairing complete, let's start sent to node %hhu\n", pairDevice);	
@@ -260,33 +261,7 @@ implementation {
     	state = localState;
     	dbg("Sensors", "Sensor status: %s\n", state.stateName);
     	dbg("Sensors", "Position X: %hhu, Y: %hhu\n", localState.X, localState.Y);
-		//dbg("Sensors", "IT'S A TEST ---->Position X: %hhu, Y: %hhu\n", localState.coord[0], localState.coord[1]);
-    	
-    	// Controlla che entrambe le letture siano state fatte
-    	/*
-    	if (sensors_read_completed == FALSE){
-      		sensors_read_completed = TRUE;
-    	} else {
-      		sensors_read_completed = FALSE;
-      		dbg("Sensors", "219");
-      		sendMessage();
-    	}
-		*/
-    		
-    		// Controlla che entrambe le letture siano state fatte
-			/*
-    		if (sensors_read_completed == FALSE){
-      			// Solo una lettura è stata fatta
-      			sensors_read_completed = TRUE;
-    		} else {
-      			// Entrambe le letture sono state fatte quindi possiamo inviare l'INFO packet
-      			sensors_read_completed = FALSE;
-      			dbg("Sensors", "230");
-      			sendMessage();
-      		}*/
-      		//dbg("Sensors", "230");
-      		sendMessage();
-    		  		
+      	sendMessage();		  		
   	}
 
 
@@ -301,6 +276,7 @@ implementation {
   		//dbg("Radio", "MA ENTRA QUI??\n");
     	//msgCount++;
     	//dbg("Radio","293\n");
+    	uint8_t attempts = 0;
     	if (!busy || 1) {
       		sb_msg_t* message = (sb_msg_t*)call Packet.getPayload(&packet, sizeof(sb_msg_t));
       	
@@ -312,16 +288,20 @@ implementation {
       		//dbg("Radio", "Sono mote: %hhu e sto mandando conferma al mote: %hhu\n", TOS_NODE_ID, pairDevice);
       // Require ack
       		call PacketAcknowledgements.requestAck( &packet );
-      		dbg("Radio","305\n");
-      		if (call AMSend.send(pairDevice, &packet, sizeof(sb_msg_t)) == SUCCESS) {
-      			msgCount++;
-      			dbg("Radio", "Radio: pairing confirmation sent to node %hhu\n", pairDevice);	
-        		busy = TRUE;
-      		}
-      		else{
-      			dbg("Radio", "Error in sending confirmation packet\n");
-      			dbg("Radio", "Pair device is: %hu\n", pairDevice);
-      			//pairingSucc();
+      		while (attempts < 4){
+      			dbg("Radio","305 and value of pairDevice is %hhu\n", pairDevice);
+      			if (call AMSend.send(pairDevice, &packet, sizeof(sb_msg_t)) == SUCCESS) {
+      				msgCount++;
+      				dbg("Radio", "Radio: pairing confirmation sent to node %hhu at attempt: %hu\n", pairDevice, attempts);
+      				attempts = 5;	
+        			busy = TRUE;
+      			}
+      			else{
+      				dbg("Radio", "Error in sending confirmation packet\n");
+      				//dbg("Radio", "Pair device is: %hu\n", pairDevice);
+      				attempts++;
+      				//pairingSucc();
+      			}
       		}
     	}
   	}
