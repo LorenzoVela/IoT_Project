@@ -35,6 +35,7 @@ implementation {
   	uint16_t msgCount = 1; //changed name
   	uint8_t threshold = 0;
   	uint8_t source;
+  	uint8_t sender;
   	message_t packet;
   	am_addr_t pairDevice;
 
@@ -164,24 +165,23 @@ implementation {
     	// Print data of the received packet
     	//dbg("Radio", "C'è qualcosa qui?\n");
     	if(call AMPacket.destination( bufPtr ) == AM_BROADCAST_ADDR){ //received a broadcast message for initializing the connection
-    		if(strcmp(message->content, key[TOS_NODE_ID]) == 0){ //Oh, it's a message from my buddy
+    		if(strcmp(message->content, key[TOS_NODE_ID]) == 0 ){ //Oh, it's a message from my buddy
     			pairDevice = call AMPacket.source( bufPtr );
-    			dbg("Radio", "I'm mote %hhu and the key received is %s", TOS_NODE_ID, message->content); 
-    			dbg("Radio", "Sending confirmation packet to the other mote that is number%hhu\n", pairDevice);
+    			dbg("Radio", "I'm mote %hhu and the key received is %s\n", TOS_NODE_ID, message->content); 
+    			dbg("Radio", "Sending confirmation packet to the other mote that is number %hhu\n", pairDevice);
     			//pairDevice = call AMPacket.source( bufPtr );
-    			phase = 2;
     			call PairingTimer.stop();
-    			//pairDevice = call AMPacket.source( bufPtr );
-    			dbg("Radio", "ENTRA QUIZZ\N");
     			pairingSucc();
+    			phase = 2;
     			//dbg("Radio", "178\n");
     		}
     	}
-    	else if(call AMPacket.destination( bufPtr ) == TOS_NODE_ID && strcmp(message->content, "Pairing Message") == 0){ //buddy is sending a message to me and wants to pair
+    	else if(call AMPacket.destination( bufPtr ) == TOS_NODE_ID && strcmp(message->content, key[TOS_NODE_ID]) == 0){ //buddy is sending a message to me and wants to pair
     		//dbg("Radio","Eureka?\n");
+    		sender = call AMPacket.source( bufPtr);
     		phase = 2;
   			call PairingTimer.stop();
-  			
+  			dbg("Radio", "Content is %s and my key is %s, sender was %hhu\n", message->content, key[TOS_NODE_ID], sender);
   			dbg("Radio", "Mote %hhu is paired with %hhu\n", TOS_NODE_ID, pairDevice);
   			//call PacketAcknowledgements.requestAck( &packet );
   			if (call AMSend.send(pairDevice, &packet, sizeof(sb_msg_t)) == SUCCESS) {
@@ -281,18 +281,18 @@ implementation {
       		sb_msg_t* message = (sb_msg_t*)call Packet.getPayload(&packet, sizeof(sb_msg_t));
       	
       		// Fill payload
-      		message->type = 2; // 1 for confirmation of pairing phase
+      		message->type = 2; 
       		message->id = msgCount;
       		
-      		strcpy(message->content, "Pairing Message");
+      		strcpy(message->content, key[TOS_NODE_ID]);
       		//dbg("Radio", "Sono mote: %hhu e sto mandando conferma al mote: %hhu\n", TOS_NODE_ID, pairDevice);
       // Require ack
-      		call PacketAcknowledgements.requestAck( &packet );
+      		//call PacketAcknowledgements.requestAck( &packet );
       		while (attempts < 4){
-      			dbg("Radio","305 and value of pairDevice is %hhu\n", pairDevice);
+      			//dbg("Radio","305 and value of pairDevice is %hhu\n", pairDevice);
       			if (call AMSend.send(pairDevice, &packet, sizeof(sb_msg_t)) == SUCCESS) {
-      				msgCount++;
-      				dbg("Radio", "Radio: pairing confirmation sent to node %hhu at attempt: %hu\n", pairDevice, attempts);
+        dbg("Radio", "Radio: sanding pairing confirmation to node %hhu\n", pairDevice);	
+        busy = TRUE;
       				attempts = 5;	
         			busy = TRUE;
       			}
