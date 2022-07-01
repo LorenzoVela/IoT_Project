@@ -39,18 +39,10 @@ implementation
 	  	y = call Random.rand16();
 	  
 	  	state.X = x;
-	  	state.coord[0] = x;
 	 
 	  	state.Y = y;
-	 	state.coord[1] = y;
+	 	
 	 	signal Read.readDone( SUCCESS, state);
-	  	/*
-	  	state.X = call Random.rand16();
-	  	state.Y = call Random.rand16();
-	  
-	  	state.coord[0] = state.X;
-	  	state.coord[1] = state.Y;
-	  	*/
 	}
 	
 	//***************** Read interface ********************//

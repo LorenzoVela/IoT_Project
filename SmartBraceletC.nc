@@ -178,14 +178,14 @@ implementation {
     	}
     	else if(call AMPacket.destination( bufPtr ) == TOS_NODE_ID && strcmp(message->content, key[TOS_NODE_ID]) == 0 && phase == 1){ //buddy is sending a message to me and wants to pair
     		dbg("Radio","Eureka?\n");
-    		sender = call AMPacket.source( bufPtr);
+    		pairDevice = call AMPacket.source( bufPtr);
     		phase = 2;
   			call PairingTimer.stop();
-  			dbg("Radio", "Content is %s and my key is %s, sender was %hhu\n", message->content, key[TOS_NODE_ID], sender);
-  			dbg("Radio", "Mote %hhu is paired with %hhu\n", TOS_NODE_ID, sender);
+  			dbg("Radio", "Content is %s and my key is %s, sender was %hhu\n", message->content, key[TOS_NODE_ID], pairDevice);
+  			dbg("Radio", "Mote %hhu is paired with %hhu\n", TOS_NODE_ID, pairDevice);
   			//call PacketAcknowledgements.requestAck( &packet );
-  			if (call AMSend.send(sender, &packet, sizeof(sb_msg_t)) == SUCCESS) {
-      			dbg("Radio", "Radio: pairing complete, let's start sent to node %hhu\n", sender);	
+  			if (call AMSend.send(pairDevice, &packet, sizeof(sb_msg_t)) == SUCCESS) {
+      			dbg("Radio", "Radio: pairing complete, let's start sent to node %hhu\n", pairDevice);	
       		}
       		//else{
       		//	dbg("Radio", "Error 189\n");
@@ -193,7 +193,6 @@ implementation {
     	}
     	else if (call AMPacket.destination( bufPtr ) == TOS_NODE_ID && message->type == 3) {
 			// Enters if the packet is for this destination and if msg_type == 2
-			sender = call AMPacket.source( bufPtr);
 			pairDevice = call AMPacket.source( bufPtr);
 		  	dbg("Radio_pack","INFO message received\n");
 		  	dbg("Info", "Position X: %hhu, Y: %hhu\n", message->X, message->Y);
@@ -263,6 +262,7 @@ implementation {
     	state = localState;
     	dbg("Sensors", "Sensor status: %s\n", state.stateName);
     	dbg("Sensors", "Position X: %hhu, Y: %hhu\n", localState.X, localState.Y);
+    	dbg("Radio", "My destination is %hhu\n: ", pairDevice);
       	sendMessage();		  		
   	}
 
@@ -290,21 +290,22 @@ implementation {
       		//dbg("Radio", "Sono mote: %hhu e sto mandando conferma al mote: %hhu\n", TOS_NODE_ID, pairDevice);
       // Require ack
       		//call PacketAcknowledgements.requestAck( &packet );
-      		while (attempts < 4){
+      		//while (attempts < 4){
       			//dbg("Radio","305 and value of pairDevice is %hhu\n", pairDevice);
       			if (call AMSend.send(pairDevice, &packet, sizeof(sb_msg_t)) == SUCCESS) {
-        dbg("Radio", "Radio: sending pairing confirmation to node %hhu\n", pairDevice);	
-        busy = TRUE;
-      				attempts = 5;	
-        			busy = TRUE;
+      				dbg("Radio", "CIAOOOOOOOO\n");
+        //dbg("Radio", "Radio: sending pairing confirmation to node %hhu\n", pairDevice);	
+        //busy = TRUE;
+      				//attempts = 5;	
+        			//busy = TRUE;
       			}
       			else{
       				dbg("Radio", "Error in sending confirmation packet to mote %hhu\n", pairDevice);
       				//dbg("Radio", "Pair device is: %hu\n", pairDevice);
-      				attempts++;
+      				//attempts++;
       				//pairingSucc();
       			}
-      		}
+      		//}
     	}
   	}
   
@@ -316,7 +317,7 @@ implementation {
       		//if(threshold < 5){
       			//threshold = threshold + 1;
         		sb_msg_t* message = (sb_msg_t*)call Packet.getPayload(&packet, sizeof(sb_msg_t));
-        
+ 
         		// Fill payload
         		message->type = 3; // 2 for INFO packet
         		message->id = msgCount;
@@ -327,8 +328,8 @@ implementation {
         		// Require ack
         		call PacketAcknowledgements.requestAck( &packet );
         		//threshold = threshold + 1;
-        		if (call AMSend.send(sender, &packet, sizeof(sb_msg_t)) == SUCCESS) {
-          			dbg("Radio", "Radio: sending INFO packet to node %hhu\n", sender);	
+        		if (call AMSend.send(pairDevice, &packet, sizeof(sb_msg_t)) == SUCCESS) {
+          			dbg("Radio", "Radio: sending INFO packet to node %hhu\n", pairDevice);	
           			//dbg("Radio", "test key1 %s\n\n", key[1]);
           			busy = TRUE;
         		}

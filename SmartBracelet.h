@@ -14,7 +14,6 @@ typedef struct sensorState {
   	uint8_t stateName[10];  //here is written the state of the bracelet
   	uint16_t X;
   	uint16_t Y;
-  	uint16_t coord[2];
 } sensorState;
 
 

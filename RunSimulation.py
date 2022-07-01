@@ -131,7 +131,7 @@ simtime = t.time();
 while (t.time() < simtime + (200 * t.ticksPerSecond())):
 	t.runNextEvent()
 	if(node1off == False and node3off == False):
-		if (t.time() >= (50 * t.ticksPerSecond())): 
+		if (t.time() >= (70 * t.ticksPerSecond())): 
 			node1.turnOff()
 			node1off = True
 			node3.turnOff()
