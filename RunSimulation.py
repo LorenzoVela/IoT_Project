@@ -35,29 +35,12 @@ out = sys.stdout;
 # Add debug channel
 print "Activate debug message on channel Radio"
 t.addChannel("Radio",out);
-print "Activate debug message on channel Pairing"
-t.addChannel("Pairing",out);
-print "Activate debug message on channel TimerPairing"
-t.addChannel("TimerPairing",out);
-print "Activate debug message on channel Radio_ack"
-t.addChannel("Radio_ack",out);
-print "Activate debug message on channel Radio_sent"
-t.addChannel("Radio_sent",out);
-print "Activate debug message on channel Radio_rec"
-t.addChannel("Radio_rec",out);
-print "Activate debug message on channel Radio_pack"
-t.addChannel("Radio_pack",out);
-
-print "Activate debug message on channel OperationalMode"
-t.addChannel("OperationalMode",out);
+print "Activate debug message on channel PairingTimer"
+t.addChannel("PairingTimer",out);
 print "Activate debug message on channel Timer10s"
 t.addChannel("Timer10s",out);
 print "Activate debug message on channel Timer60s"
 t.addChannel("Timer60s",out);
-print "Activate debug message on channel Sensors"
-t.addChannel("Sensors",out);
-print "Activate debug message on channel Info"
-t.addChannel("Info",out);
 
 
 print "Creating node 0...";
