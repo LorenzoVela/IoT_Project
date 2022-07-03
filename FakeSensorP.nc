@@ -14,8 +14,6 @@ implementation
 		sensorState state;
 
 	  	int num = (call Random.rand16() %10);  //generates a random number between 0 and 9
-	  	int x;
-	  	int y;
 	  	switch (num) //select the state
 	  	{
 	  		case 0 ... 2:
@@ -35,13 +33,9 @@ implementation
 	  			break;
 	  	}
 		
-	  	x = call Random.rand16();
-	  	y = call Random.rand16();
+	  	state.X = call Random.rand16();
+	  	state.Y= call Random.rand16();
 	  
-	  	state.X = x;
-	 
-	  	state.Y = y;
-	 	
 	 	signal Read.readDone( SUCCESS, state);
 	}
 	
